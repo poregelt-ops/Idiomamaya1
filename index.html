@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planes Diarios 2027 - Idioma Maya K'iche' | Primero Primaria - Colegio Montano Cortijo</title>
+  <style>
+    :root {
+      --navy: #1F3C88;
+      --blue: #3F72AF;
+      --white: #FFFFFF;
+      --yellow: #F2C94C;
+      --bg-light: #F4F7FC;
+      --text-dark: #1E293B;
+      --text-muted: #475569;
+      --border-color: #CBD5E1;
+      --shadow: 0 4px 14px rgba(31, 60, 136, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.55;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      color: var(--white);
+      padding: 24px 20px;
+      border-bottom: 5px solid var(--yellow);
+      box-shadow: var(--shadow);
+    }
+
+    .header-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title h1 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .header-title p {
+      font-size: 0.95rem;
+      color: #E2E8F0;
+      margin-top: 4px;
+    }
+
+    .header-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .badge-yellow {
+      background-color: var(--yellow);
+      color: var(--navy);
+      border: none;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px 40px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      background: var(--white);
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .tab-btn {
+      background-color: var(--bg-light);
+      color: var(--navy);
+      border: 1px solid var(--border-color);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1 1 auto;
+      text-align: center;
+    }
+
+    .tab-btn:hover {
+      background-color: #E2E8F0;
+    }
+
+    .tab-btn.active {
+      background-color: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+      box-shadow: 0 2px 6px rgba(31, 60, 136, 0.25);
+    }
+
+    .action-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .btn-action {
+      background-color: var(--blue);
+      color: var(--white);
+      border: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-action:hover {
+      background-color: var(--navy);
+    }
+
+    .plan-card {
+      display: none;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border-top: 4px solid var(--blue);
+    }
+
+    .plan-card.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .plan-header {
+      background-color: #F8FAFC;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .plan-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .plan-number {
+      background-color: var(--navy);
+      color: var(--white);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .habit-tag {
+      background-color: #FEF9C3;
+      color: #854D0E;
+      border: 1px solid var(--yellow);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .plan-title {
+      font-size: 1.35rem;
+      color: var(--navy);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      background: var(--white);
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    .meta-item strong {
+      color: var(--navy);
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .competency-box {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 14px;
+      padding: 18px 24px;
+      background-color: #EFF6FF;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .comp-card {
+      background: var(--white);
+      padding: 14px;
+      border-radius: 8px;
+      border-left: 4px solid var(--navy);
+    }
+
+    .comp-card h4 {
+      color: var(--navy);
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .comp-card p {
+      font-size: 0.92rem;
+      color: var(--text-dark);
+    }
+
+    .table-wrapper {
+      padding: 20px 24px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    th {
+      background-color: var(--navy);
+      color: var(--white);
+      text-align: left;
+      padding: 12px 14px;
+      font-weight: 600;
+      border: 1px solid var(--navy);
+    }
+
+    td {
+      padding: 14px;
+      border: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #F8FAFC;
+    }
+
+    .moment-cell {
+      font-weight: 700;
+      color: var(--navy);
+      width: 18%;
+    }
+
+    .time-badge {
+      display: inline-block;
+      margin-top: 6px;
+      background-color: var(--yellow);
+      color: var(--navy);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .activity-title {
+      font-weight: 700;
+      color: var(--blue);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .vocab-pill {
+      display: inline-block;
+      background: #E0E7FF;
+      color: var(--navy);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.86rem;
+      margin: 2px 2px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      background: var(--white);
+    }
+
+    @media print {
+      body { background: #fff; }
+      .nav-tabs, .action-bar { display: none !important; }
+      .plan-card {
+        display: block !important;
+        box-shadow: none;
+        border: 1px solid #999;
+        margin-bottom: 30px;
+        page-break-after: always;
+      }
+      header {
+        background: var(--navy) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      th {
+        background-color: var(--navy) !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-container">
+    <div class="header-title">
+      <h1>Colegio Montano Cortijo — Planificación Diaria 2027</h1>
+      <p>Curso: Idioma Maya K’iche’ | Grado: Primero Primaria | Docente: Miss Juanita Ajsoc Sac</p>
+    </div>
+    <div class="header-badges">
+      <span class="badge">Metodología 4 Momentos</span>
+      <span class="badge badge-yellow">Líder en Mí (7 Hábitos)</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="action-bar">
+    <button class="btn-action" onclick="toggleAllPlans()" id="toggleAllBtn">Ver todos los planes juntos</button>
+    <button class="btn-action" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+
+  <nav class="nav-tabs" id="navTabs">
+    <button class="tab-btn active" onclick="showPlan(0)">Plan 1: Saludos</button>
+    <button class="tab-btn" onclick="showPlan(1)">Plan 2: Vocales y Glotal</button>
+    <button class="tab-btn" onclick="showPlan(2)">Plan 3: Frutas I</button>
+    <button class="tab-btn" onclick="showPlan(3)">Plan 4: Frutas II</button>
+    <button class="tab-btn" onclick="showPlan(4)">Plan 5: Números 1-10</button>
+    <button class="tab-btn" onclick="showPlan(5)">Plan 6: Números 11-20</button>
+    <button class="tab-btn" onclick="showPlan(6)">Plan 7: Partes de la Casa</button>
+  </nav>
+
+  <!-- PLAN 1 -->
+  <section class="plan-card active" id="plan-0">
+    <div class="plan-header">
+      <div class="plan-header-top">
+        <span class="plan-number">Unidad I • Plan Diario 1 de 7</span>
+        <span class="habit-tag">Hábito 1: Ser Proactivo (Tomar la iniciativa para saludar con respeto)</span>
+      </div>
+      <h2 class="plan-title">Saludos y cortesía básica en K’iche’</h2>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Docente</strong>Miss Juanita Ajsoc Sac</div>
+        <div class="meta-item"><strong>Grado y Nivel</strong>Primero Primaria</div>
+        <div class="meta-item"><strong>Contenidos</strong>Saludos a profesores y papás: Buenos días, Buenas tardes, Buenas noches, Muchas gracias, Adiós</div>
+        <div class="meta-item"><strong>Vocabulario Clave</strong><span class="vocab-pill">Saqarik</span> <span class="vocab-pill">Xq’eqarik</span> <span class="vocab-pill">Xok aq’ab’</span> <span class="vocab-pill">Maltiox</span> <span class="vocab-pill">K’o chik</span></div>
+      </div>
+    </div>
+    <div class="competency-box">
+      <div class="comp-card">
+        <h4>Competencia</h4>
+        <p>Responde con gestos, movimientos y oralmente los sonidos de las diferentes palabras.</p>
+      </div>
+      <div class="comp-card">
+        <h4>Indicador de Logro</h4>
+        <p>Responde a preguntas y peticiones sencillas utilizando gestos y movimientos corporales.</p>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Momento Didáctico</th>
+            <th>Desarrollo de Actividades y Estrategias</th>
+            <th>Recursos</th>
+            <th>Evaluación / Evidencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="moment-cell">1. Introducción Motivante<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Canto y mímica del sol y la luna:</span>La docente utiliza un títere y tarjetas del sol saliendo (<em>Saqarik</em> - Buenos días), el sol en la tarde (<em>Xq’eqarik</em> - Buenas tardes) y la luna (<em>Xok aq’ab’</em> - Buenas noches). Los niños imitan desperezarse, saludar con la mano y despedirse (<em>K’o chik</em> / Adiós) al ritmo de una ronda infantil.</td>
+            <td>Títere, tarjetas ilustradas (sol, tarde, luna)</td>
+            <td>Participación gestual y repetición coral</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">2. Trabajo Personal<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Hoja de trazo y asociación:</span>En su cuaderno o guía impresa, el estudiante une con crayones de colores la ilustración del momento del día (mañana, tarde, noche) con el saludo correspondiente en K’iche’ y decora la palabra <em>Maltiox</em> (Muchas gracias).</td>
+            <td>Cuaderno, crayones, guía impresa</td>
+            <td>Identificación visual correcta en cuaderno</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">3. Trabajo Cooperativo<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Juego de roles en parejas:</span>En parejas, un estudiante asume el rol de papá/mamá o maestra y el otro el de estudiante entrando al aula. Practican el diálogo breve: <em>"Saqarik, ajtij"</em> (Buenos días, maestra) — <em>"Saqarik, Maltiox"</em>.</td>
+            <td>Gafetes de roles (mamá, papá, maestra)</td>
+            <td>Observación de pronunciación y empatía</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">4. Plenaria<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">La ruleta del saludo:</span>Se eligen 4 parejas al azar para pasar al frente, girar una flecha hacia el dibujo del sol o la luna y representar su saludo frente a sus compañeros. Se refuerza el aplauso de reconocimiento.</td>
+            <td>Ruleta de cartón</td>
+            <td>Lista de cotejo (pronunciación y seguridad)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PLAN 2 -->
+  <section class="plan-card" id="plan-1">
+    <div class="plan-header">
+      <div class="plan-header-top">
+        <span class="plan-number">Unidad I • Plan Diario 2 de 7</span>
+        <span class="habit-tag">Hábito 2: Comenzar con un fin en mente (Identificar sonidos base del K’iche’)</span>
+      </div>
+      <h2 class="plan-title">Las vocales y el uso de la glotal (’) en K’iche’</h2>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Docente</strong>Miss Juanita Ajsoc Sac</div>
+        <div class="meta-item"><strong>Grado y Nivel</strong>Primero Primaria</div>
+        <div class="meta-item"><strong>Contenidos</strong>Las vocales simples y vocales glotalizadas</div>
+        <div class="meta-item"><strong>Vocabulario Clave</strong><span class="vocab-pill">a, e, i, o, u</span> <span class="vocab-pill">a’, e’, i’, o’, u’</span> <span class="vocab-pill">ak’</span> <span class="vocab-pill">ik</span> <span class="vocab-pill">uj</span> <span class="vocab-pill">oj</span></div>
+      </div>
+    </div>
+    <div class="competency-box">
+      <div class="comp-card">
+        <h4>Competencia</h4>
+        <p>Identifica fonemas, símbolos propios y palabras del K’iche’ en un contexto. Utiliza correctamente la glotal en la pronunciación de las palabras.</p>
+      </div>
+      <div class="comp-card">
+        <h4>Indicador de Logro</h4>
+        <p>Escucha activamente instrucciones sencillas de su interlocutor identificando la acción requerida.</p>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Momento Didáctico</th>
+            <th>Desarrollo de Actividades y Estrategias</th>
+            <th>Recursos</th>
+            <th>Evaluación / Evidencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="moment-cell">1. Introducción Motivante<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">El sonido del salto (La glotal):</span>La maestra presenta las 5 vocales (<em>a, e, i, o, u</em>) con movimientos corporales (brazos arriba, a los lados, salto). Luego introduce el apóstrofo o glotal (’) explicando que es un "pequeño frenazo o hipo" en la garganta al pronunciar <em>a’, e’, i’, o’, u’</em>.</td>
+            <td>Carteles de vocales, pizarra</td>
+            <td>Imitación fonética y corporal</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">2. Trabajo Personal<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Modelado con plasticina:</span>Cada niño moldea con plasticina las 5 vocales y coloca una bolita de otro color en la parte superior derecha para representar la glotal (’), repitiendo en voz baja el sonido corto.</td>
+            <td>Plasticina, cartulina base</td>
+            <td>Modelado correcto de la grafía y glotal</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">3. Trabajo Cooperativo<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Cazadores de vocales:</span>En equipos de 3, reciben tarjetas con palabras cortas en K’iche’ con imagen (ej. <em>ak’</em> - pollo, <em>ik</em> - chile, <em>uj</em> - papel, <em>oj</em> - aguacate) y rodean con un aro o lana las vocales y las glotales que encuentren.</td>
+            <td>Tarjetas de vocabulario, aros/lana</td>
+            <td>Trabajo en equipo y discriminación visual</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">4. Plenaria<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Eco grupal:</span>Se seleccionan equipos al azar para mostrar una de sus tarjetas al salón, pronunciar la vocal inicial y guiar a toda la clase en un eco grupal.</td>
+            <td>Tarjetas del equipo</td>
+            <td>Escala de rango (uso de la glotal)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PLAN 3 -->
+  <section class="plan-card" id="plan-2">
+    <div class="plan-header">
+      <div class="plan-header-top">
+        <span class="plan-number">Unidad II • Plan Diario 3 de 7</span>
+        <span class="habit-tag">Hábito 3: Poner primero lo primero (Cuidar nuestra alimentación y atención)</span>
+      </div>
+      <h2 class="plan-title">Nombre de las frutas – Parte I</h2>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Docente</strong>Miss Juanita Ajsoc Sac</div>
+        <div class="meta-item"><strong>Grado y Nivel</strong>Primero Primaria</div>
+        <div class="meta-item"><strong>Contenidos</strong>Manzana, Piña, Pera, Naranja, Banano</div>
+        <div class="meta-item"><strong>Vocabulario Clave</strong><span class="vocab-pill">Mansan</span> <span class="vocab-pill">Ch’op</span> <span class="vocab-pill">Per</span> <span class="vocab-pill">Alanxax</span> <span class="vocab-pill">Saq’ul</span></div>
+      </div>
+    </div>
+    <div class="competency-box">
+      <div class="comp-card">
+        <h4>Competencia</h4>
+        <p>Identifica visualmente figuras, imágenes y palabras de vocabulario básico del idioma K’iche’.</p>
+      </div>
+      <div class="comp-card">
+        <h4>Indicador de Logro</h4>
+        <p>Manifiesta interés por enriquecer su vocabulario y expresiones propias en Comunicación y Lenguaje L2.</p>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Momento Didáctico</th>
+            <th>Desarrollo de Actividades y Estrategias</th>
+            <th>Recursos</th>
+            <th>Evaluación / Evidencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="moment-cell">1. Introducción Motivante<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">La canasta sorpresa:</span>La docente trae una canasta típica guatemalteca cubierta con un perraje y saca frutas reales o de plástico una por una. Al mostrar cada fruta, dice su nombre en K’iche’ (<em>ch’op, alanxax, saq’ul, mansan, per</em>) y los niños imitan cómo se pela o se come cada una.</td>
+            <td>Canasta, tela típica, frutas reales/plásticas</td>
+            <td>Atención y repetición oral</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">2. Trabajo Personal<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Mi álbum de frutas:</span>Los estudiantes colorean las 5 frutas en su hoja de trabajo según su color natural y repasan el trazo punteado de su nombre en K’iche’.</td>
+            <td>Hoja de trabajo, crayones, lápiz</td>
+            <td>Hoja de trabajo completa</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">3. Trabajo Cooperativo<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Memoria de frutas:</span>En mesas de 4 integrantes, juegan memoria emparejando la ilustración de la fruta con su tarjeta de nombre. Cada vez que levantan un par, deben decir el nombre en K’iche’ para quedarse con las cartas.</td>
+            <td>Juegos de memoria (flashcards)</td>
+            <td>Respeto de turnos y asociación</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">4. Plenaria<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">¿Qué fruta tengo en la espalda?:</span>Se elige al azar a 4 estudiantes. Se les pega una fruta en la espalda; sus compañeros les dan pistas gestuales y el estudiante adivina diciendo el nombre en K’iche’.</td>
+            <td>Tarjetas con cinta adhesiva</td>
+            <td>Lista de cotejo (vocabulario adquirido)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PLAN 4 -->
+  <section class="plan-card" id="plan-3">
+    <div class="plan-header">
+      <div class="plan-header-top">
+        <span class="plan-number">Unidad II • Plan Diario 4 de 7</span>
+        <span class="habit-tag">Hábito 4: Pensar ganar-ganar (Compartir recursos y celebrar el aprendizaje mutuo)</span>
+      </div>
+      <h2 class="plan-title">Nombre de las frutas – Parte II</h2>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Docente</strong>Miss Juanita Ajsoc Sac</div>
+        <div class="meta-item"><strong>Grado y Nivel</strong>Primero Primaria</div>
+        <div class="meta-item"><strong>Contenidos</strong>Papaya, Melón, Sandía, Uva, Mandarina</div>
+        <div class="meta-item"><strong>Vocabulario Clave</strong><span class="vocab-pill">Papay</span> <span class="vocab-pill">Melon</span> <span class="vocab-pill">Kaq’oq’</span> <span class="vocab-pill">Uw</span> <span class="vocab-pill">Mandarin</span></div>
+      </div>
+    </div>
+    <div class="competency-box">
+      <div class="comp-card">
+        <h4>Competencia</h4>
+        <p>Identifica visualmente figuras, imágenes y palabras de vocabulario básico del idioma K’iche’.</p>
+      </div>
+      <div class="comp-card">
+        <h4>Indicador de Logro</h4>
+        <p>Reconoce las palabras de vocabulario y sus definiciones.</p>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Momento Didáctico</th>
+            <th>Desarrollo de Actividades y Estrategias</th>
+            <th>Recursos</th>
+            <th>Evaluación / Evidencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="moment-cell">1. Introducción Motivante<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Ensalada de frutas musical:</span>Los niños se sientan en círculo. A cada uno se le asigna una fruta (<em>kaq’oq’, uw, melon, papay, mandarin</em>). Cuando la docente dice el nombre en K’iche’, los niños con esa fruta cambian de lugar; al decir <em>"¡Rikil!"</em> (comida/ensalada), todos cambian.</td>
+            <td>Tarjetas colgantes de frutas</td>
+            <td>Reacción auditiva y movilidad</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">2. Trabajo Personal<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Clasificación por tamaño:</span>En su cuaderno, el estudiante dibuja una fruta grande (<em>kaq’oq’</em> - sandía) y una pequeña (<em>uw</em> - uva), escribiendo debajo el nombre en K’iche’ con ayuda de la pizarra.</td>
+            <td>Cuaderno, lápiz, crayones</td>
+            <td>Cuaderno revisado</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">3. Trabajo Cooperativo<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">El mercado de Montano:</span>En grupos pequeños, arman un pequeño puesto de mercado con las 10 frutas vistas (Planes 3 y 4). Practican pedir una fruta usando <em>Maltiox</em> (gracias).</td>
+            <td>Frutas de juguete / recortes</td>
+            <td>Interacción cooperativa</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">4. Plenaria<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Vendedores y compradores:</span>Se eligen 2 grupos al azar para dramatizar una compra rápida en el mercado frente a la clase utilizando exclusivamente los nombres de las frutas en K’iche’ y los saludos aprendidos.</td>
+            <td>Puesto de mercado móvil</td>
+            <td>Rúbrica breve de expresión oral</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PLAN 5 -->
+  <section class="plan-card" id="plan-4">
+    <div class="plan-header">
+      <div class="plan-header-top">
+        <span class="plan-number">Unidad III • Plan Diario 5 de 7</span>
+        <span class="habit-tag">Hábito 5: Buscar primero entender, luego ser entendido (Escuchar atentamente el conteo)</span>
+      </div>
+      <h2 class="plan-title">Los números del 1 al 10 en K’iche’</h2>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Docente</strong>Miss Juanita Ajsoc Sac</div>
+        <div class="meta-item"><strong>Grado y Nivel</strong>Primero Primaria</div>
+        <div class="meta-item"><strong>Contenidos</strong>Numeración Maya K’iche’ del 1 al 10</div>
+        <div class="meta-item"><strong>Vocabulario Clave</strong><span class="vocab-pill">Jun (1)</span> <span class="vocab-pill">Keb’ (2)</span> <span class="vocab-pill">Oxib’ (3)</span> <span class="vocab-pill">Kajib’ (4)</span> <span class="vocab-pill">Job’ (5)</span> <span class="vocab-pill">Waqib’ (6)</span> <span class="vocab-pill">Wuqub’ (7)</span> <span class="vocab-pill">Wajxaqib’ (8)</span> <span class="vocab-pill">B’elejeb’ (9)</span> <span class="vocab-pill">Lajuj (10)</span></div>
+      </div>
+    </div>
+    <div class="competency-box">
+      <div class="comp-card">
+        <h4>Competencia</h4>
+        <p>Responde con gestos, movimientos y oralmente los sonidos de las diferentes palabras. Utiliza correctamente la glotal.</p>
+      </div>
+      <div class="comp-card">
+        <h4>Indicador de Logro</h4>
+        <p>Escucha activamente instrucciones sencillas de su interlocutor identificando la acción requerida.</p>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Momento Didáctico</th>
+            <th>Desarrollo de Actividades y Estrategias</th>
+            <th>Recursos</th>
+            <th>Evaluación / Evidencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="moment-cell">1. Introducción Motivante<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Conteo con palmadas y saltos:</span>La docente enseña la canción rítmica de los números del 1 al 10 en K’iche’ (<em>jun, keb’, oxib’...</em>) marcando las glotales con un aplauso fuerte. Los niños cuentan con los dedos de ambas manos.</td>
+            <td>Pandereta o claves, cartel numérico</td>
+            <td>Coordinación ritmo-palabra</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">2. Trabajo Personal<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Gusano numérico:</span>Cada estudiante recibe una hoja con un gusanito de 10 círculos. Escribe los números del 1 al 10 y pega la cantidad correspondiente de semillas o bolitas de papel de china en cada segmento.</td>
+            <td>Hoja de trabajo, papel de china, goma</td>
+            <td>Conteo y correspondencia número-cantidad</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">3. Trabajo Cooperativo<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Torres de bloques:</span>En parejas, la maestra dice un número en K’iche’ (ej. <em>wuqub’</em> - 7) y cada pareja debe construir una torre con exactamente esa cantidad de bloques o tapitas lo más rápido posible.</td>
+            <td>Bloques de construcción o tapitas</td>
+            <td>Precisión en el conteo en pareja</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">4. Plenaria<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">El capitán manda:</span>Se eligen 5 alumnos al azar para ser "capitanes" por turnos. Cada uno dice un número del 1 al 10 en K’iche’ y el resto del salón da esa cantidad de saltos contando en voz alta.</td>
+            <td>Espacio libre en aula</td>
+            <td>Lista de cotejo (pronunciación de glotales)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PLAN 6 -->
+  <section class="plan-card" id="plan-5">
+    <div class="plan-header">
+      <div class="plan-header-top">
+        <span class="plan-number">Unidad III • Plan Diario 6 de 7</span>
+        <span class="habit-tag">Hábito 6: Sinergizar (Unir esfuerzos para alcanzar metas mayores, contar hasta 20)</span>
+      </div>
+      <h2 class="plan-title">Los números del 11 al 20 en K’iche’</h2>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Docente</strong>Miss Juanita Ajsoc Sac</div>
+        <div class="meta-item"><strong>Grado y Nivel</strong>Primero Primaria</div>
+        <div class="meta-item"><strong>Contenidos</strong>Numeración Maya K’iche’ del 11 al 20</div>
+        <div class="meta-item"><strong>Vocabulario Clave</strong><span class="vocab-pill">Julajuj (11)</span> <span class="vocab-pill">Kab’lajuj (12)</span> <span class="vocab-pill">Oxlajuj (13)</span> <span class="vocab-pill">Kajlajuj (14)</span> <span class="vocab-pill">Jolajuj (15)</span> <span class="vocab-pill">Waqlajuj (16)</span> <span class="vocab-pill">Wuqlajuj (17)</span> <span class="vocab-pill">Wajxaqlajuj (18)</span> <span class="vocab-pill">B’elejlajuj (19)</span> <span class="vocab-pill">Juk’al (20)</span></div>
+      </div>
+    </div>
+    <div class="competency-box">
+      <div class="comp-card">
+        <h4>Competencia</h4>
+        <p>Identifica fonemas, símbolos propios y palabras del K’iche’ en un contexto.</p>
+      </div>
+      <div class="comp-card">
+        <h4>Indicador de Logro</h4>
+        <p>Puede comunicarse de manera sencilla y entendible en el idioma impartido.</p>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Momento Didáctico</th>
+            <th>Desarrollo de Actividades y Estrategias</th>
+            <th>Recursos</th>
+            <th>Evaluación / Evidencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="moment-cell">1. Introducción Motivante<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">El truco del <em>Lajuj</em> (10) y <em>Juk’al</em> (20):</span>La maestra explica con dos manos abiertas (<em>lajuj</em> = 10) cómo se forman los números del 11 al 19 agregando <em>lajuj</em> al final (<em>julajuj, kab’lajuj...</em>) y presenta el número 20 (<em>juk’al</em> - una veintena, manos y pies) con una dinámica de movimiento.</td>
+            <td>Tarjetas gigantes del 11 al 20</td>
+            <td>Comprensión auditiva del patrón</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">2. Trabajo Personal<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Unir puntos (1 al 20):</span>Los niños completan un dibujo oculto (una pirámide maya o un quetzal) uniendo los puntos del 1 al 20 mientras repiten en voz baja cada número en K’iche’.</td>
+            <td>Hoja de unir puntos, lápiz</td>
+            <td>Secuencia numérica completada</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">3. Trabajo Cooperativo<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Bingo numérico del 11 al 20:</span>En grupos de 3, comparten un cartón de bingo con números del 11 al 20. La docente canta los números en K’iche’ y los equipos colocan frijolitos hasta completar una línea.</td>
+            <td>Cartones de bingo, frijoles/fichas</td>
+            <td>Cooperación y escucha activa</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">4. Plenaria<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Cadena humana del 1 al 20:</span>Se seleccionan 20 alumnos al azar, se les entrega un número desordenado y entre todos se ordenan al frente diciendo su número en K’iche’ en secuencia ascendente.</td>
+            <td>Tarjetas numéricas 1–20</td>
+            <td>Observación directa del orden y pronunciación</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PLAN 7 -->
+  <section class="plan-card" id="plan-6">
+    <div class="plan-header">
+      <div class="plan-header-top">
+        <span class="plan-number">Unidad IV • Plan Diario 7 de 7</span>
+        <span class="habit-tag">Hábito 7: Afilar la sierra (Cuidar nuestro hogar y espacios de descanso y estudio)</span>
+      </div>
+      <h2 class="plan-title">Partes de la casa en K’iche’</h2>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Docente</strong>Miss Juanita Ajsoc Sac</div>
+        <div class="meta-item"><strong>Grado y Nivel</strong>Primero Primaria</div>
+        <div class="meta-item"><strong>Contenidos</strong>Sala, Comedor, Cocina, Baño, Patio, Dormitorio, Estudio, Garaje</div>
+        <div class="meta-item"><strong>Vocabulario Clave</strong><span class="vocab-pill">Ja (Casa)</span> <span class="vocab-pill">B’anb’al wa (Cocina)</span> <span class="vocab-pill">Atinb’al (Baño)</span> <span class="vocab-pill">Uwach ja (Patio)</span> <span class="vocab-pill">Warab’al (Dormitorio)</span> <span class="vocab-pill">Tijob’al (Estudio)</span> <span class="vocab-pill">K’olb’al ch’ich’ (Garaje)</span></div>
+      </div>
+    </div>
+    <div class="competency-box">
+      <div class="comp-card">
+        <h4>Competencia</h4>
+        <p>Identifica visualmente figuras, imágenes y palabras de vocabulario básico del idioma K’iche’.</p>
+      </div>
+      <div class="comp-card">
+        <h4>Indicador de Logro</h4>
+        <p>Respeta las ideas de otros niños y las normativas internas de disciplina. Reconoce las palabras de vocabulario y sus definiciones.</p>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Momento Didáctico</th>
+            <th>Desarrollo de Actividades y Estrategias</th>
+            <th>Recursos</th>
+            <th>Evaluación / Evidencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="moment-cell">1. Introducción Motivante<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Adivina dónde estoy (<em>¿Jachin k’o wi?</em>):</span>La docente hace mímica de acciones cotidianas (dormir → <em>warab’al</em>; cocinar → <em>b’anb’al wa</em>; bañarse → <em>atinb’al</em>; estudiar → <em>tijob’al</em>; estacionar un auto → <em>k’olb’al ch’ich’</em>) y muestra un póster gigante de una casa.</td>
+            <td>Póster grande de una casa con habitaciones</td>
+            <td>Asociación acción-espacio</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">2. Trabajo Personal<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Mi casa ideal:</span>En una hoja doble oficio doblada como casita, el estudiante dibuja y colorea 4 espacios de su casa (sala, comedor, dormitorio, patio) y pega las etiquetas con sus nombres.</td>
+            <td>Hoja doble oficio, etiquetas impresas, goma, crayones</td>
+            <td>Maqueta plana / dibujo etiquetado</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">3. Trabajo Cooperativo<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Armando la casa en equipo:</span>En grupos de 4, reciben un plano vacío de una casa y recortes de muebles (cama, estufa, sofá, mesa, carro). Deben dialogar y pegar cada mueble en el ambiente correcto nombrando la parte de la casa.</td>
+            <td>Plano de casa, recortes de muebles, goma</td>
+            <td>Trabajo colaborativo y clasificación</td>
+          </tr>
+          <tr>
+            <td class="moment-cell">4. Plenaria<br><span class="time-badge">10 min</span></td>
+            <td><span class="activity-title">Recorrido por nuestra casa:</span>Se elige a un representante de cada equipo al azar para presentar su plano frente a la clase, señalando al menos tres ambientes y mencionando su nombre.</td>
+            <td>Planos elaborados por los equipos</td>
+            <td>Lista de cotejo (identificación y expresión oral)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<footer>
+  Colegio Montano Cortijo • Planificación Anual 2027 • Idioma Maya K’iche’ — Primero Primaria
+</footer>
+
+<script>
+  let showAll = false;
+
+  function showPlan(index) {
+    showAll = false;
+    document.getElementById('toggleAllBtn').textContent = 'Ver todos los planes juntos';
+    const cards = document.querySelectorAll('.plan-card');
+    const tabs = document.querySelectorAll('.tab-btn');
+
+    cards.forEach((card, i) => {
+      card.classList.toggle('active', i === index);
+      card.style.marginBottom = '0';
+    });
+
+    tabs.forEach((tab, i) => {
+      tab.classList.toggle('active', i === index);
+    });
+  }
+
+  function toggleAllPlans() {
+    showAll = !showAll;
+    const cards = document.querySelectorAll('.plan-card');
+    const tabs = document.querySelectorAll('.tab-btn');
+    const btn = document.getElementById('toggleAllBtn');
+
+    if (showAll) {
+      btn.textContent = 'Ver por pestañas individuales';
+      cards.forEach(card => {
+        card.classList.add('active');
+        card.style.marginBottom = '24px';
+      });
+      tabs.forEach(tab => tab.classList.remove('active'));
+    } else {
+      showPlan(0);
+    }
+  }
+</script>
+
+</body>
+</html>
